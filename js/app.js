@@ -6,7 +6,7 @@ const products=[
 {id:5,code:'MEEM-005',cat:'stickers',name:'Visual Identity Stickers',ar:'استيكرات الهوية البصرية',price:0,img:'images/product-05.jpg',desc:'Visual identity sticker designs.'},
 {id:6,code:'MEEM-006',cat:'cards',name:'Greeting Cards',ar:'كروت تهنئة',price:0,img:'images/product-06.jpg',desc:'Greeting card designs.'}
 ];
-let cart=[];let lang='en';let page=0;const perPage=6;
+let cart=[];let lang='ar';let page=0;const perPage=6;
 const heroImages=['images/hero-01.jpg','images/hero-02.jpg','images/hero-03.jpg'];let slide=0;
 function renderProducts(){const el=document.getElementById('products');const pages=Math.max(1,Math.ceil(products.length/perPage));if(page>=pages)page=pages-1;const list=products.slice(page*perPage,(page+1)*perPage);el.innerHTML=list.map(p=>`<article class="product"><div class="product-img"><img src="${p.img}" alt="${p.name}"><span class="badge">DIGITAL</span></div><div class="product-info"><span class="category">${p.cat}</span><h3>${lang==='en'?p.name:p.ar}</h3><p>${p.desc}</p><div class="product-bottom"><button class="add" onclick="addToCart(${p.id})">+</button></div></div></article>`).join('')||'<div class="empty">No products found.</div>';document.getElementById('productPage').textContent=`${page+1} / ${pages}`;document.getElementById('prevProducts').disabled=page===0;document.getElementById('nextProducts').disabled=page===pages-1}
 function addToCart(id){const p=products.find(x=>x.id===id);if(!cart.find(x=>x.id===id))cart.push(p);renderCart()}
