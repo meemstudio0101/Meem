@@ -21,7 +21,7 @@
 @media(max-width:600px){section{padding:75px 0}.container{width:calc(100% - 28px)}.nav{width:calc(100% - 24px);min-height:64px;padding:0 16px}.logo{font-size:25px}.nav-actions{gap:5px}.lang{padding:9px 11px}.hero-content{min-height:730px}.hero-copy{padding-top:50px}.hero h1{font-size:48px}.hero p{font-size:13px}.products{grid-template-columns:1fr}.product-img{height:280px}.feature-grid{grid-template-columns:1fr}.footer{grid-template-columns:1fr}.bottom{flex-direction:column;gap:10px}.slider-controls{bottom:25px}.review{width:300px}.cta{padding:90px 0 65px}}
 
 /* MEEM CUSTOM OVERRIDES */
-.hero{margin:120px auto 30px;max-width:1180px;min-height:390px;height:52vh;border-radius:24px;overflow:hidden;}
+.hero{margin:120px auto 30px;max-width:1180px;min-height:390px;height:40vh;border-radius:24px;overflow:hidden;}
 .hero-copy{max-width:560px;padding:42px;}
 .hero h1{font-size:clamp(30px,4vw,38px);line-height:1.08;}
 .cart.has-items{background:#019784;color:#fff;}
