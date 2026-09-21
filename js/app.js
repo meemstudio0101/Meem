@@ -332,9 +332,17 @@ document.getElementById('checkout').onclick=()=>{
 
     }
 
+    // اختيار اسم المنتج حسب اللغة
     const text=
         cart
-        .map(p=>`${p.name} - $${p.price}`)
+        .map(p=>{
+            const productName =
+                lang==='en'
+                ? p.name
+                : p.ar;
+
+            return `${productName} - $${p.price}`;
+        })
         .join('%0A');
 
     const total=
@@ -343,8 +351,14 @@ document.getElementById('checkout').onclick=()=>{
             0
         );
 
+    // رسالة الواتساب حسب اللغة
+    const message =
+        lang==='en'
+        ? `Hello, I want to order:%0A${text}%0ATotal: $${total}`
+        : `مرحبًا، أود طلب:%0A${text}%0Aالإجمالي: $${total}`;
+
     window.open(
-        `https://wa.me/923312330597?text=Hello, I want to order:%0A${text}%0ATotal: $${total}`,
+        `https://wa.me/923312330597?text=${message}`,
         '_blank'
     );
 
