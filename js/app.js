@@ -1,3 +1,4 @@
+```js
 const products=[
 {id:1,code:'MEEM-001',cat:'cards',catAr:'كروت',name:'Dessert Cards',ar:'كروت حلويات',price:0,img:'images/product-01.jpg',desc:'Dessert-themed cards.',descAr:'كروت بتصميم مستوحى من الحلويات.'},
 
@@ -31,11 +32,17 @@ let slide=0;
 ========================= */
 
 function renderProducts(){
+
     const el=document.getElementById('products');
 
-    const pages=Math.max(1,Math.ceil(products.length/perPage));
+    const pages=Math.max(
+        1,
+        Math.ceil(products.length/perPage)
+    );
 
-    if(page>=pages) page=pages-1;
+    if(page>=pages){
+        page=pages-1;
+    }
 
     const list=products.slice(
         page*perPage,
@@ -43,13 +50,20 @@ function renderProducts(){
     );
 
     el.innerHTML=list.map(p=>`
+
         <article class="product">
 
             <div class="product-img">
-                <img src="${p.img}" alt="${lang==='en'?p.name:p.ar}">
+
+                <img
+                    src="${p.img}"
+                    alt="${lang==='en'?p.name:p.ar}"
+                >
+
                 <span class="badge">
                     ${lang==='en'?'DIGITAL':'رقمي'}
                 </span>
+
             </div>
 
             <div class="product-info">
@@ -67,18 +81,29 @@ function renderProducts(){
                 </p>
 
                 <div class="product-bottom">
-                    <button class="add" onclick="addToCart(${p.id})">
+
+                    <button
+                        class="add ${cart.find(x=>x.id===p.id) ? 'added' : ''}"
+                        onclick="addToCart(${p.id})"
+                    >
                         +
                     </button>
+
                 </div>
 
             </div>
 
         </article>
+
     `).join('') || `
+
         <div class="empty">
-            ${lang==='en'?'No products found.':'لا توجد منتجات.'}
+            ${lang==='en'
+                ?'No products found.'
+                :'لا توجد منتجات.'
+            }
         </div>
+
     `;
 
     document.getElementById('productPage').textContent=
@@ -97,6 +122,7 @@ function renderProducts(){
 ========================= */
 
 function addToCart(id){
+
     const p=products.find(x=>x.id===id);
 
     if(!cart.find(x=>x.id===id)){
@@ -104,12 +130,22 @@ function addToCart(id){
     }
 
     renderCart();
+
+    // تحديث المنتج حتى يتحول زر + إلى اللون الأخضر
+    renderProducts();
 }
 
 
 function removeFromCart(id){
-    cart=cart.filter(x=>x.id!==id);
+
+    cart=cart.filter(
+        x=>x.id!==id
+    );
+
     renderCart();
+
+    // تحديث المنتج حتى يرجع زر + للونه الأصلي
+    renderProducts();
 }
 
 
@@ -125,17 +161,26 @@ function renderCart(){
         );
 
     document.getElementById('cartItems').innerHTML=
+
         cart.length
+
         ?
+
         cart.map(p=>`
+
             <div class="cart-item">
 
                 <img src="${p.img}">
 
                 <div>
+
                     <h4>
-                        ${lang==='en'?p.name:p.ar}
+                        ${lang==='en'
+                            ?p.name
+                            :p.ar
+                        }
                     </h4>
+
                 </div>
 
                 <button
@@ -146,15 +191,22 @@ function renderCart(){
                 </button>
 
             </div>
+
         `).join('')
+
         :
+
         `
+
         <div class="empty">
+
             ${lang==='en'
                 ?'Your cart is empty.'
                 :'السلة فارغة.'
             }
+
         </div>
+
         `;
 
     document.getElementById('total').textContent='';
@@ -166,6 +218,7 @@ function renderCart(){
 ========================= */
 
 function openCart(){
+
     document.getElementById('cart')
         .classList.add('open');
 
@@ -175,6 +228,7 @@ function openCart(){
 
 
 function closeCart(){
+
     document.getElementById('cart')
         .classList.remove('open');
 
@@ -183,11 +237,14 @@ function closeCart(){
 }
 
 
-document.getElementById('cartOpen').onclick=openCart;
+document.getElementById('cartOpen').onclick=
+    openCart;
 
-document.getElementById('cartClose').onclick=closeCart;
+document.getElementById('cartClose').onclick=
+    closeCart;
 
-document.getElementById('overlay').onclick=closeCart;
+document.getElementById('overlay').onclick=
+    closeCart;
 
 
 /* =========================
@@ -195,18 +252,28 @@ document.getElementById('overlay').onclick=closeCart;
 ========================= */
 
 document.getElementById('prevProducts').onclick=()=>{
+
     if(page>0){
+
         page--;
+
         renderProducts();
+
     }
+
 };
 
 
 document.getElementById('nextProducts').onclick=()=>{
+
     if((page+1)*perPage<products.length){
+
         page++;
+
         renderProducts();
+
     }
+
 };
 
 
@@ -243,17 +310,22 @@ function applyLanguage(){
                 :el.dataset.ar;
 
             if(value!==undefined){
+
                 el.innerHTML=value;
+
             }
 
         });
 
     renderProducts();
+
     renderCart();
 }
 
 
-/* LANGUAGE BUTTON */
+/* =========================
+   LANGUAGE BUTTON
+========================= */
 
 document.getElementById('lang').onclick=()=>{
 
@@ -284,20 +356,29 @@ function hero(){
 
 
 document.getElementById('next').onclick=()=>{
+
     slide=(slide+1)%3;
+
     hero();
+
 };
 
 
 document.getElementById('prev').onclick=()=>{
+
     slide=(slide+2)%3;
+
     hero();
+
 };
 
 
 setInterval(()=>{
+
     slide=(slide+1)%3;
+
     hero();
+
 },6000);
 
 
@@ -332,18 +413,23 @@ document.getElementById('checkout').onclick=()=>{
 
     }
 
-    // اختيار اسم المنتج حسب اللغة
+
+    // اسم المنتج حسب اللغة المختارة
+
     const text=
         cart
         .map(p=>{
-            const productName =
+
+            const productName=
                 lang==='en'
-                ? p.name
-                : p.ar;
+                ?p.name
+                :p.ar;
 
             return `${productName} - $${p.price}`;
+
         })
         .join('%0A');
+
 
     const total=
         cart.reduce(
@@ -351,15 +437,43 @@ document.getElementById('checkout').onclick=()=>{
             0
         );
 
+
     // رسالة الواتساب حسب اللغة
-    const message =
+
+    const message=
         lang==='en'
-        ? `Hello, I want to order:%0A${text}%0ATotal: $${total}`
-        : `مرحبًا، أود طلب:%0A${text}%0Aالإجمالي: $${total}`;
+
+        ?
+
+        `Hello, I want to order:%0A${text}%0ATotal: $${total}`
+
+        :
+
+        `مرحبًا، أود طلب:%0A${text}%0Aالإجمالي: $${total}`;
+
 
     window.open(
+
         `https://wa.me/923312330597?text=${message}`,
+
         '_blank'
+
     );
 
 };
+```
+
+**وأضف هذا الجزء إلى ملف CSS الخاص بك:**
+
+```css
+.add.added {
+    background-color: #019784;
+    color: #fff;
+}
+```
+
+الجزء المهم في JavaScript هو:
+
+```js
+class="add ${cart.find(x=>x.id===p.id) ? 'added' : ''}"
+```
