@@ -341,21 +341,15 @@ document.getElementById('checkout').onclick=()=>{
                 ? p.name
                 : p.ar;
 
-            return `${productName} - $${p.price}`;
+            return `${productName}`;
         })
-        .join('%0A');
-
-    const total=
-        cart.reduce(
-            (s,p)=>s+p.price,
-            0
-        );
+     
 
     // رسالة الواتساب حسب اللغة
     const message =
         lang==='en'
-        ? `Hello, I want to order:%0A${text}%0ATotal: $${total}`
-        : `مرحبًا، أود طلب:%0A${text}%0Aالإجمالي: $${total}`;
+        ? `Hello, I want to order:%0A${text}`
+        : `مرحبًا، أود طلب:%0A${text}`;
 
     window.open(
         `https://wa.me/923312330597?text=${message}`,
